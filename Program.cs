@@ -14,11 +14,18 @@ namespace DependencyInjection
 
             var greetingService = serviceProvider.GetService<IGreetingService>();
             greetingService.Greet("World");
+            
+            var greetingService2 = serviceProvider.GetService<IGreetingService>();
+            greetingService2.Greet("World");
+
+            Console.ReadLine();
         }
 
         private static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IGreetingService, GreetingService>();
+            //services.AddTransient<IGreetingService, GreetingService>();
+            //services.AddScoped<IGreetingService, GreetingService>();
+            services.AddSingleton<IGreetingService, GreetingService>();
         }
 
         public interface IGreetingService
@@ -28,9 +35,13 @@ namespace DependencyInjection
 
         public class  GreetingService : IGreetingService
         {
+            public int GreetingCounter;
+
             public void Greet(string name)
             {
                 Console.WriteLine($"Hello, {name}");
+                GreetingCounter++;
+                Console.WriteLine($"Greeting Counter: {GreetingCounter}");
             }
         }
     }
