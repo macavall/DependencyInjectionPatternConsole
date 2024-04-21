@@ -10,7 +10,10 @@ namespace DependencyInjection
             var services = new ServiceCollection();
             ConfigureServices(services);
 
+            var serviceProvider = services.BuildServiceProvider();
 
+            var greetingService = serviceProvider.GetService<IGreetingService>();
+            greetingService.Greet("World");
         }
 
         private static void ConfigureServices(IServiceCollection services)
